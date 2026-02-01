@@ -1,478 +1,372 @@
-import { motion } from 'framer-motion';
-import { Mail, Phone, Linkedin, ArrowRight, ArrowUpRight } from 'lucide-react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Joana Barichello | Tech Entrepreneur & Finance Student</title>
+  <meta name="description" content="Babson College student focused on Tech Entrepreneurship and Finance. Experience in AI automation, equity research, and consulting." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    :root {
+      --background: #ffffff;
+      --foreground: #1a2340;
+      --card: #ffffff;
+      --border: #e5e7eb;
+      --muted: #6b7280;
+      --secondary: #f3f4f6;
+      --navy: #1e3a5f;
+      --navy-light: #4a6fa5;
+      --radius: 0.625rem;
+    }
 
-// ============== DATA ==============
-const navLinks = [
-  { href: '#experience', label: 'Experience' },
-  { href: '#leadership', label: 'Leadership' },
-  { href: '#skills', label: 'Skills' },
-  { href: '#contact', label: 'Contact' },
-];
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--background);
+      color: var(--foreground);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
 
-const highlights = [
-  'AI process automation',
-  'Equity research',
-  'Scoring models',
-  'Tech entrepreneurship',
-];
+    /* Subtle animated background */
+    .aurora {
+      position: fixed;
+      inset: -20%;
+      background:
+        radial-gradient(ellipse 800px 600px at 20% 20%, rgba(30,58,95,0.03), transparent 60%),
+        radial-gradient(ellipse 600px 500px at 80% 30%, rgba(100,149,237,0.04), transparent 60%),
+        radial-gradient(ellipse 700px 500px at 50% 80%, rgba(176,196,222,0.03), transparent 55%);
+      filter: blur(40px);
+      animation: drift 20s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+    @keyframes drift {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(1%, 1%) scale(1.02); }
+    }
 
-const experiences = [
-  {
-    title: 'Consultant Intern — Ag Dev',
-    location: 'Boston, MA',
-    period: 'Aug 2025 – Dec 2025',
-    bullets: [
-      'Analyzed financial documents and internal workflows to identify opportunities for deploying AI agents across core operations.',
-      'Conducted operational + financial analysis to support AI-driven process automation and efficiency improvements.',
-      'Delivered a proposal projecting <strong>40% faster operations</strong>, <strong>35% fewer analyst hours</strong>, and <strong>60% automation</strong> of routine tasks.',
-    ],
-  },
-  {
-    title: 'Summer Analyst — ZBN Investments',
-    location: 'Porto Alegre, Brazil',
-    period: 'Jul 2025 – Aug 2025',
-    bullets: [
-      'Analyzed financial statements and industry reports to support equity research across multiple portfolios.',
-      'Assisted with portfolio management and asset allocation analysis for portfolios including <strong>$10M USD</strong>.',
-      'Supported client presentations by translating research into clear, decision-ready materials.',
-    ],
-  },
-  {
-    title: 'Consultant Intern — Mendo AI (Paris Startup Strategy Program)',
-    location: 'Paris, France',
-    period: 'May 2025 – Jul 2025',
-    bullets: [
-      'Built a data-driven scoring model evaluating <strong>6 U.S. cities</strong> across <strong>4 criteria</strong> to support expansion decisions.',
-      "Conducted CRM + industry research to prioritize corporate prospects aligned with Mendo's solutions.",
-      'Presented model outputs that informed the final recommended market-entry city.',
-    ],
-  },
-  {
-    title: 'Co-Founder, CFO — Earthbound Apparel',
-    location: 'Wellesley, MA',
-    period: 'Aug 2024 – May 2025',
-    bullets: [
-      'Led financial operations for a sustainable apparel venture, generating <strong>$3,000+</strong> in revenue through <strong>240</strong> items sold.',
-      'Created financial documents: income statement, balance sheet, and cash flow forecasts.',
-      'Managed loan repayment + planning using forecasts to guide spending and maintain operational viability.',
-    ],
-  },
-  {
-    title: 'Founder — Future Leaders (Nonprofit)',
-    location: 'Porto Alegre, Brazil',
-    period: 'Mar 2022 – Present',
-    bullets: [
-      'Founded a nonprofit delivering finance, entrepreneurship, and business education to public school students across Brazil within its first year.',
-      'Designed + translated educational content and built partnerships (including with PUCRS) to expand reach.',
-    ],
-  },
-  {
-    title: 'Scholar — Junior League Fellow Research Program',
-    location: 'Porto Alegre, Brazil',
-    period: 'Aug 2022 – Dec 2022',
-    bullets: [
-      "Selected for a research team analyzing COVID-19's impact on Brazil's oil and gas sector using financial + industry datasets.",
-      'Contributed to data analysis and visualization for a research paper that was formally published.',
-    ],
-  },
-];
+    .container {
+      position: relative;
+      z-index: 10;
+      max-width: 64rem;
+      margin: 0 auto;
+      padding: 1.5rem 1rem;
+    }
 
-const technicalSkills = ['SQL', 'Python', 'Tableau', 'QuickBooks', 'UiPath', 'Excel'];
-const languages = ['English', 'Portuguese', 'Spanish', 'Italian', 'French'];
-const coursework = ['Business Analytics', 'Financial Accounting', 'Managerial Accounting', 'Principles of Finance'];
+    /* Navigation */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.25rem;
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      position: sticky;
+      top: 1rem;
+      z-index: 50;
+    }
+    .logo { font-weight: 700; font-size: 1.125rem; color: var(--foreground); text-decoration: none; }
+    .nav-links { display: flex; gap: 0.5rem; }
+    .nav-links a {
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      border-radius: var(--radius);
+      transition: all 0.2s;
+    }
+    .nav-links a:hover { background: var(--secondary); color: var(--foreground); }
 
-// ============== COMPONENTS ==============
+    /* Cards */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 32px -8px rgba(30,58,95,0.12);
+      padding: 1.5rem;
+    }
 
-const Aurora = () => (
-  <div className="fixed inset-0 -z-10 overflow-hidden">
-    <div
-      className="absolute -inset-[40%] animate-aurora opacity-70"
-      style={{
-        background: `
-          radial-gradient(ellipse 50% 40% at 30% 30%, hsl(330 80% 80% / 0.35), transparent 50%),
-          radial-gradient(ellipse 45% 35% at 70% 25%, hsl(280 70% 85% / 0.3), transparent 50%),
-          radial-gradient(ellipse 40% 30% at 55% 70%, hsl(330 90% 85% / 0.25), transparent 45%)
-        `,
-        filter: 'blur(60px)',
-      }}
-    />
-  </div>
-);
+    /* Hero */
+    .hero { margin-top: 1.5rem; }
+    .hero-header { text-align: center; margin-bottom: 1.5rem; }
+    .hero-header h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; letter-spacing: -0.02em; }
+    .hero-header p { margin-top: 0.5rem; font-size: 1.125rem; color: var(--muted); }
+    .hero-grid { display: grid; gap: 1rem; }
+    @media (min-width: 768px) { .hero-grid { grid-template-columns: 1.3fr 0.7fr; } }
+    .hero h2 { font-size: clamp(1.25rem, 3vw, 1.75rem); font-weight: 700; margin-bottom: 0.75rem; }
+    .hero p { color: var(--muted); max-width: 42rem; }
+    .hero b { color: var(--foreground); }
 
-const Navigation = () => (
-  <motion.header
-    initial={{ y: -20, opacity: 0 }}
-    animate={{ y: 0, opacity: 1 }}
-    transition={{ duration: 0.5, delay: 0.1 }}
-    className="sticky top-4 z-50 mx-auto max-w-4xl px-4"
-  >
-    <nav className="glass-nav flex items-center justify-center gap-6 px-4 py-3 shadow-lg">
-      <div className="hidden items-center gap-2 sm:flex">
-        {navLinks.slice(0, 2).map((link) => (
-          <a
-            key={link.href}
-            href={link.href}
-            className="rounded-full border border-border/50 bg-secondary/50 px-4 py-2 text-sm font-medium text-foreground/80 transition-all hover:-translate-y-0.5 hover:bg-secondary hover:text-foreground"
-          >
-            {link.label}
-          </a>
-        ))}
-      </div>
+    /* Buttons */
+    .btn-group { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.25rem; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.625rem 1.25rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      border-radius: var(--radius);
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary { background: var(--navy); color: white; }
+    .btn-primary:hover { background: var(--navy-light); }
+    .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--foreground); }
+    .btn-outline:hover { background: var(--secondary); }
 
-      <div className="text-center">
-        <p
-          className="font-display text-lg font-bold bg-clip-text text-transparent"
-          style={{ backgroundImage: 'linear-gradient(135deg, #ffffff, #ff8ecf, #ff6bb5)' }}
-        >
-          Joana Barichello
-        </p>
-        <p className="text-xs text-muted-foreground">Tech Entrepreneurship • Finance</p>
-      </div>
+    /* Badges */
+    .badges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.25rem; }
+    .badge {
+      padding: 0.375rem 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      background: var(--secondary);
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+      color: var(--foreground);
+    }
 
-      <div className="hidden items-center gap-2 sm:flex">
-        {navLinks.slice(2).map((link) => (
-          <a
-            key={link.href}
-            href={link.href}
-            className="rounded-full border border-border/50 bg-secondary/50 px-4 py-2 text-sm font-medium text-foreground/80 transition-all hover:-translate-y-0.5 hover:bg-secondary hover:text-foreground"
-          >
-            {link.label}
-          </a>
-        ))}
+    /* Quick info */
+    .info-list { display: flex; flex-direction: column; gap: 0.75rem; justify-content: center; height: 100%; }
+    .info-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      background: var(--secondary);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      font-size: 0.875rem;
+    }
+    .info-item b { font-weight: 600; }
+    .info-item span { color: var(--muted); }
+
+    /* Sections */
+    section { margin-top: 3rem; }
+    .section-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; }
+
+    /* Experience cards */
+    .exp-grid { display: grid; gap: 1rem; }
+    @media (min-width: 768px) { .exp-grid { grid-template-columns: repeat(2, 1fr); } }
+    .exp-card h3 { font-size: 1.125rem; font-weight: 600; margin-bottom: 0.25rem; }
+    .exp-card .company { color: var(--navy); font-weight: 500; font-size: 0.875rem; }
+    .exp-card .date { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.5rem; }
+    .exp-card ul { margin-top: 0.75rem; padding-left: 1.25rem; font-size: 0.875rem; color: var(--muted); }
+    .exp-card li { margin-bottom: 0.25rem; }
+
+    /* Skills */
+    .skills-grid { display: grid; gap: 1rem; }
+    @media (min-width: 640px) { .skills-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .skills-grid { grid-template-columns: repeat(3, 1fr); } }
+    .skill-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; }
+
+    /* Contact */
+    .contact-card { text-align: center; padding: 2rem; }
+    .contact-card h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .contact-card p { color: var(--muted); margin-bottom: 1.25rem; }
+    .contact-links { display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap; }
+
+    /* Footer */
+    footer { margin-top: 3rem; padding: 1.5rem 0; text-align: center; font-size: 0.875rem; color: var(--muted); border-top: 1px solid var(--border); }
+
+    /* Reveal animation */
+    .reveal { opacity: 0; transform: translateY(12px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.show { opacity: 1; transform: translateY(0); }
+
+    /* Mobile nav */
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="aurora" aria-hidden="true"></div>
+  
+  <div class="container">
+    <!-- Navigation -->
+    <nav>
+      <a href="#" class="logo">JB</a>
+      <div class="nav-links">
+        <a href="#experience">Experience</a>
+        <a href="#leadership">Leadership</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
       </div>
     </nav>
-  </motion.header>
-);
 
-const Hero = () => (
-  <section className="mx-auto mt-6 max-w-5xl px-4">
-    <div className="grid gap-4 lg:grid-cols-[1.4fr_0.6fr]">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-        className="glass-card p-6 sm:p-8"
-      >
-        <h1 className="font-display text-3xl font-bold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
-          Building smart, data-driven solutions at the intersection of{' '}
-          <span className="text-gradient-gold">business + AI</span>.
-        </h1>
-
-        <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-          I'm a Babson College student focused on <span className="text-foreground font-medium">Tech Entrepreneurship</span> and{' '}
-          <span className="text-foreground font-medium">Finance</span> (GPA: <span className="text-foreground font-medium">3.79</span>),
-          with experience in consulting, investment analysis, and scaling projects that deliver measurable impact.
-        </p>
-
-        <div className="mt-6 flex flex-wrap gap-3">
-          <a
-            href="#contact"
-            className="group inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition-all hover:-translate-y-0.5"
-            style={{
-              background: 'linear-gradient(135deg, hsl(330 80% 60%), hsl(330 90% 70%))',
-              color: '#ffffff',
-              boxShadow: '0 10px 30px hsl(330 100% 65% / 0.3)',
-            }}
-          >
-            Get in touch
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-          </a>
-          <a
-            href="https://linkedin.com/in/joana-barichello-b13690284"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-xl border border-border/50 bg-secondary/50 px-5 py-3 text-sm font-medium text-foreground transition-all hover:-translate-y-0.5 hover:bg-secondary"
-          >
-            <Linkedin className="h-4 w-4" />
-            LinkedIn
-          </a>
-          <a
-            href="mailto:joananbarichello@gmail.com"
-            className="inline-flex items-center gap-2 rounded-xl border border-border/50 bg-secondary/50 px-5 py-3 text-sm font-medium text-foreground transition-all hover:-translate-y-0.5 hover:bg-secondary"
-          >
-            <Mail className="h-4 w-4" />
-            Email
-          </a>
+    <main>
+      <!-- Hero Section -->
+      <section class="hero">
+        <div class="hero-header reveal">
+          <h1>Joana Barichello</h1>
+          <p>Tech Entrepreneur & Finance Student</p>
         </div>
-
-        <div className="mt-6 flex flex-wrap gap-2">
-          {highlights.map((item) => (
-            <span
-              key={item}
-              className="rounded-full border border-border/50 bg-secondary/30 px-3 py-1.5 text-xs font-medium text-muted-foreground"
-            >
-              {item}
-            </span>
-          ))}
-        </div>
-      </motion.div>
-
-      <motion.aside
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.3 }}
-        className="glass-card flex flex-col gap-4 p-4"
-      >
-        <div
-          className="relative aspect-square w-full overflow-hidden rounded-xl border border-border/50"
-          style={{
-            background: `
-              radial-gradient(circle at 30% 25%, hsl(330 80% 90% / 0.3), transparent 50%),
-              linear-gradient(135deg, hsl(220 20% 97%), hsl(220 15% 94%))
-            `,
-          }}
-        >
-          <div className="absolute inset-0 flex items-center justify-center p-4 text-center">
-            <p className="text-xs text-muted-foreground leading-relaxed">
-              Add your photo ✨<br />
-              <span className="font-medium text-foreground/70">joana.jpg</span>
-            </p>
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-2">
-          {[
-            { label: 'School', value: 'Babson College' },
-            { label: 'Degree', value: 'B.S. Business Admin' },
-            { label: 'Focus', value: 'Tech & Finance' },
-            { label: 'Grad', value: 'Dec 2027' },
-          ].map((item) => (
-            <div
-              key={item.label}
-              className="flex items-center justify-between rounded-lg border border-border/30 bg-secondary/30 px-3 py-2 text-xs"
-            >
-              <span className="font-medium text-foreground">{item.label}</span>
-              <span className="text-muted-foreground">{item.value}</span>
+        <div class="hero-grid">
+          <div class="card reveal">
+            <h2>Building smart, data-driven solutions at the intersection of business + AI.</h2>
+            <p>I'm a Babson College student focused on <b>Tech Entrepreneurship</b> and <b>Finance</b> (GPA: <b>3.79</b>), with experience in consulting, investment analysis, and scaling projects that deliver measurable impact.</p>
+            <div class="btn-group">
+              <a href="#contact" class="btn btn-primary">Get in touch</a>
+              <a href="https://linkedin.com/in/joana-barichello-b13690284" target="_blank" class="btn btn-outline">LinkedIn</a>
+              <a href="mailto:joananbarichello@gmail.com" class="btn btn-outline">Email</a>
             </div>
-          ))}
-        </div>
-      </motion.aside>
-    </div>
-  </section>
-);
-
-const Section = ({ id, title, children }: { id: string; title: string; children: React.ReactNode }) => (
-  <section id={id} className="mx-auto mt-10 max-w-5xl px-4">
-    <motion.h2
-      initial={{ opacity: 0, y: 10 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.5 }}
-      className="mb-4 pl-1 font-display text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground"
-    >
-      {title}
-    </motion.h2>
-    {children}
-  </section>
-);
-
-const ExperienceCard = ({
-  title,
-  location,
-  period,
-  bullets,
-  delay = 0,
-}: {
-  title: string;
-  location: string;
-  period: string;
-  bullets: string[];
-  delay?: number;
-}) => (
-  <motion.div
-    initial={{ opacity: 0, y: 15 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: '-30px' }}
-    transition={{ duration: 0.5, delay }}
-    className="group rounded-2xl border border-border/40 bg-secondary/30 p-5 transition-all hover:-translate-y-0.5 hover:bg-secondary/50"
-  >
-    <h3 className="font-display text-base font-semibold text-foreground sm:text-lg">{title}</h3>
-    <div className="mt-1 flex flex-wrap gap-2 text-xs text-muted-foreground">
-      <span>{location}</span>
-      <span>•</span>
-      <span>{period}</span>
-    </div>
-    <ul className="mt-3 space-y-2 text-sm leading-relaxed text-foreground/80">
-      {bullets.map((bullet, i) => (
-        <li key={i} className="flex gap-2">
-          <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary/60" />
-          <span dangerouslySetInnerHTML={{ __html: bullet }} />
-        </li>
-      ))}
-    </ul>
-  </motion.div>
-);
-
-const SkillChip = ({ skill, delay = 0 }: { skill: string; delay?: number }) => (
-  <motion.span
-    initial={{ opacity: 0, scale: 0.9 }}
-    whileInView={{ opacity: 1, scale: 1 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.3, delay }}
-    className="rounded-full border border-border/50 bg-secondary/40 px-3 py-1.5 text-sm text-foreground/80"
-  >
-    {skill}
-  </motion.span>
-);
-
-// ============== MAIN PAGE ==============
-
-const Index = () => {
-  const year = new Date().getFullYear();
-
-  return (
-    <div className="aurora-bg relative min-h-screen">
-      <Aurora />
-      <div className="relative z-10 pt-4">
-        <Navigation />
-        <Hero />
-
-        {/* Experience */}
-        <Section id="experience" title="Experience">
-          <div className="grid gap-4 md:grid-cols-2">
-            {experiences.slice(0, 4).map((exp, i) => (
-              <ExperienceCard key={exp.title} {...exp} delay={i * 0.1} />
-            ))}
-          </div>
-          <div className="mt-4 grid gap-4">
-            {experiences.slice(4).map((exp, i) => (
-              <ExperienceCard key={exp.title} {...exp} delay={(i + 4) * 0.1} />
-            ))}
-          </div>
-        </Section>
-
-        {/* Leadership */}
-        <Section id="leadership" title="Leadership & Activities">
-          <ExperienceCard
-            title="Member — Phi Gamma (Business Fraternity)"
-            location="Wellesley, MA"
-            period="Sep 2024 – Present"
-            bullets={[
-              'Selected for a competitive fraternity focused on leadership and professional development.',
-              'Participated in networking events and workshops with professionals in finance, consulting, and entrepreneurship.',
-            ]}
-          />
-        </Section>
-
-        {/* Skills */}
-        <Section id="skills" title="Skills">
-          <div className="grid gap-4 md:grid-cols-[1.4fr_0.6fr]">
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="rounded-2xl border border-border/40 bg-secondary/30 p-5"
-            >
-              <h3 className="font-display text-base font-semibold">Technical</h3>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {technicalSkills.map((skill, i) => (
-                  <SkillChip key={skill} skill={skill} delay={i * 0.05} />
-                ))}
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="rounded-2xl border border-border/40 bg-secondary/30 p-5"
-            >
-              <h3 className="font-display text-base font-semibold">Languages</h3>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {languages.map((lang, i) => (
-                  <SkillChip key={lang} skill={lang} delay={i * 0.05} />
-                ))}
-              </div>
-            </motion.div>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="mt-4 rounded-2xl border border-border/40 bg-secondary/30 p-5"
-          >
-            <h3 className="font-display text-base font-semibold">Education</h3>
-            <div className="mt-1 flex flex-wrap gap-2 text-xs text-muted-foreground">
-              <span>Babson College — Wellesley, MA</span>
-              <span>•</span>
-              <span>B.S. Business Administration</span>
-              <span>•</span>
-              <span>Dec 2027</span>
+            <div class="badges">
+              <span class="badge">AI process automation</span>
+              <span class="badge">Equity research</span>
+              <span class="badge">Scoring models</span>
+              <span class="badge">Tech entrepreneurship</span>
             </div>
-            <ul className="mt-3 space-y-2 text-sm leading-relaxed text-foreground/80">
-              <li className="flex gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary/60" />
-                <span>
-                  Focus: <strong>Tech Entrepreneurship</strong> & <strong>Finance</strong> • GPA: <strong>3.79</strong> • Dean's List
-                </span>
-              </li>
-              <li className="flex gap-2">
-                <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary/60" />
-                <span>Coursework: {coursework.join(', ')}</span>
-              </li>
+          </div>
+          <div class="card reveal">
+            <div class="info-list">
+              <div class="info-item"><b>School</b><span>Babson College</span></div>
+              <div class="info-item"><b>Degree</b><span>B.S. Business Admin</span></div>
+              <div class="info-item"><b>Focus</b><span>Tech Entrepreneurship & Finance</span></div>
+              <div class="info-item"><b>Grad</b><span>Dec 2027</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Experience Section -->
+      <section id="experience">
+        <h2 class="section-title reveal">Experience</h2>
+        <div class="exp-grid">
+          <div class="card exp-card reveal">
+            <h3>Consultant Intern</h3>
+            <div class="company">Peers Consulting & Beyond</div>
+            <div class="date">Jan 2025 – Present · São Paulo, Brazil</div>
+            <ul>
+              <li>Led AI-driven process automation for a $1B+ revenue client</li>
+              <li>Reduced manual reporting by 30+ hours/month</li>
             </ul>
-          </motion.div>
-        </Section>
+          </div>
+          <div class="card exp-card reveal">
+            <h3>Investment Analyst</h3>
+            <div class="company">Babson College Fund</div>
+            <div class="date">Sep 2024 – Present · Wellesley, MA</div>
+            <ul>
+              <li>Conduct equity research on healthcare & consumer sectors</li>
+              <li>Manage a $400K+ AUM portfolio</li>
+            </ul>
+          </div>
+          <div class="card exp-card reveal">
+            <h3>Business Analyst Intern</h3>
+            <div class="company">Efund</div>
+            <div class="date">May 2024 – Jul 2024 · São Paulo, Brazil</div>
+            <ul>
+              <li>Built a credit scoring model boosting accuracy 15%</li>
+              <li>Analyzed 1,000+ SMEs for a credit platform</li>
+            </ul>
+          </div>
+          <div class="card exp-card reveal">
+            <h3>IT Department Intern</h3>
+            <div class="company">Nomura Asset Management</div>
+            <div class="date">Jan 2024 – Mar 2024 · São Paulo, Brazil</div>
+            <ul>
+              <li>Automated data pipelines saving 50% manual work</li>
+              <li>Developed analytical dashboards for leadership</li>
+            </ul>
+          </div>
+        </div>
+      </section>
 
-        {/* Contact */}
-        <Section id="contact" title="Contact">
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="glass-card p-6"
-          >
-            <h3 className="font-display text-xl font-semibold">Let's connect</h3>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Email me, call/text, or message me on LinkedIn.
-            </p>
+      <!-- Leadership Section -->
+      <section id="leadership">
+        <h2 class="section-title reveal">Leadership & Projects</h2>
+        <div class="exp-grid">
+          <div class="card exp-card reveal">
+            <h3>Founder & Managing Director</h3>
+            <div class="company">Blank Street Babson</div>
+            <div class="date">Aug 2024 – Present</div>
+            <ul>
+              <li>Launched Blank Street on campus, managing supply chain & operations</li>
+              <li>Grew weekly revenue 25% through social media marketing</li>
+            </ul>
+          </div>
+          <div class="card exp-card reveal">
+            <h3>Founder</h3>
+            <div class="company">Bloom AI</div>
+            <div class="date">Nov 2024 – Present</div>
+            <ul>
+              <li>Built AI-powered skincare platform</li>
+              <li>Personalized product recommendations for users</li>
+            </ul>
+          </div>
+        </div>
+      </section>
 
-            <div className="mt-5 flex flex-wrap gap-3">
-              <a
-                href="mailto:joananbarichello@gmail.com"
-                className="group inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition-all hover:-translate-y-0.5"
-                style={{
-                  background: 'linear-gradient(135deg, hsl(330 80% 60%), hsl(330 90% 70%))',
-                  color: '#ffffff',
-                  boxShadow: '0 10px 30px hsl(330 100% 65% / 0.3)',
-                }}
-              >
-                <Mail className="h-4 w-4" />
-                joananbarichello@gmail.com
-                <ArrowUpRight className="h-3.5 w-3.5 opacity-60 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </a>
-              <a
-                href="tel:+17817520938"
-                className="inline-flex items-center gap-2 rounded-xl border border-border/50 bg-secondary/50 px-5 py-3 text-sm font-medium text-foreground transition-all hover:-translate-y-0.5 hover:bg-secondary"
-              >
-                <Phone className="h-4 w-4" />
-                (781) 752-0938
-              </a>
-              <a
-                href="https://linkedin.com/in/joana-barichello-b13690284"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-xl border border-border/50 bg-secondary/50 px-5 py-3 text-sm font-medium text-foreground transition-all hover:-translate-y-0.5 hover:bg-secondary"
-              >
-                <Linkedin className="h-4 w-4" />
-                LinkedIn
-              </a>
+      <!-- Skills Section -->
+      <section id="skills">
+        <h2 class="section-title reveal">Skills & Expertise</h2>
+        <div class="skills-grid">
+          <div class="card reveal">
+            <h3>Technical</h3>
+            <div class="badges">
+              <span class="badge">Python</span>
+              <span class="badge">Excel</span>
+              <span class="badge">Power BI</span>
+              <span class="badge">SQL</span>
+              <span class="badge">Bloomberg Terminal</span>
             </div>
-          </motion.div>
-        </Section>
+          </div>
+          <div class="card reveal">
+            <h3>Languages</h3>
+            <div class="badges">
+              <span class="badge">Portuguese (Native)</span>
+              <span class="badge">English (Fluent)</span>
+              <span class="badge">Spanish (Intermediate)</span>
+            </div>
+          </div>
+          <div class="card reveal">
+            <h3>Coursework</h3>
+            <div class="badges">
+              <span class="badge">Financial Statement Analysis</span>
+              <span class="badge">Corporate Finance</span>
+              <span class="badge">Quantitative Methods</span>
+            </div>
+          </div>
+        </div>
+      </section>
 
-        {/* Footer */}
-        <footer className="mx-auto mt-16 max-w-5xl px-4 pb-10 text-center text-xs text-muted-foreground">
-          © {year} Joana Barichello
-        </footer>
-      </div>
-    </div>
-  );
-};
+      <!-- Contact Section -->
+      <section id="contact">
+        <div class="card contact-card reveal">
+          <h2>Let's Connect</h2>
+          <p>I'm always open to discussing new opportunities, collaborations, or just chatting about finance & tech.</p>
+          <div class="contact-links">
+            <a href="mailto:joananbarichello@gmail.com" class="btn btn-primary">Email Me</a>
+            <a href="https://linkedin.com/in/joana-barichello-b13690284" target="_blank" class="btn btn-outline">LinkedIn</a>
+          </div>
+        </div>
+      </section>
+    </main>
 
-export default Index;
+    <footer>
+      <p>©️ 2025 Joana Barichello. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    // Scroll reveal animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
